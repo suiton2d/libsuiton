@@ -1,7 +1,17 @@
 apply plugin: 'java'
 
 sourceCompatibility = 1.7
-version = '0.1.0'
+version = '0.1.1'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'eu.appsatori:gradle-fatjar-plugin:0.3'
+    }
+}
 
 repositories {
     mavenCentral()
@@ -17,6 +27,8 @@ dependencies {
     compile "com.badlogicgames.gdx:gdx:${GDX_VERSION}"
     compile "com.badlogicgames.gdx:gdx-box2d:${GDX_VERSION}"
 }
+
+apply plugin: 'eu.appsatori.fatjar'
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
