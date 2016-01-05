@@ -26,8 +26,6 @@ public class Behavior extends Component {
 
     private String filename;
 
-    public Behavior() {}
-
     public Behavior(String name, String filename) {
         super(name);
 

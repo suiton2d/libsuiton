@@ -33,8 +33,6 @@ public abstract class Component {
     protected GameObject gameObject;
     protected boolean enabled;
 
-    public Component() {}
-
     public Component(String name) {
         this.name = name;
     }

@@ -15,8 +15,6 @@ public class MusicSource extends Component {
 
     private String filename;
 
-    public MusicSource() {}
-
     public MusicSource(String name, String filename) {
         super(name);
         this.filename = filename;

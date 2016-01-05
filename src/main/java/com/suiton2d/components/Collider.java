@@ -34,8 +34,6 @@ public class Collider<T extends CollisionShape> extends Component {
     protected T collisionShape;
     protected Body physicalBody;
 
-    public Collider() {}
-
     public Collider(String name, T collisionShape, boolean isSensor) {
         super(name);
         this.isSensor = isSensor;

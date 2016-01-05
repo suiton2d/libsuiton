@@ -37,8 +37,6 @@ public class RigidBody<T extends CollisionShape> extends Component {
     private Body physicsBody;
     private T collisionShape;
 
-    public RigidBody() {}
-
     public RigidBody(String name, T collisionShape, boolean isKinematic,
                      float mass, boolean fixedRotation, boolean isBullet) {
         super(name);
