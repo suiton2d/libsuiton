@@ -2,16 +2,20 @@ package com.suiton2d.components;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 
-public interface Renderer {
+public abstract class Renderer extends Component {
 
-    int getBoundingWidth();
+    public abstract int getBoundingWidth();
 
-    int getBoundingHeight();
+    public abstract int getBoundingHeight();
+
+    public Renderer(String name) {
+        super(name);
+    }
 
     /**
      * Abstract method used for rendering.
      * @param batch The SpriteBatch instance to use for rendering.
      * @param dt The time since the last frame update.
      */
-    void render(Batch batch, float dt);
+    public abstract void render(Batch batch, float dt);
 }

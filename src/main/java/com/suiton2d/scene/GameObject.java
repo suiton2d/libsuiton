@@ -25,6 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.suiton2d.components.AnimatedRenderer;
 import com.suiton2d.components.Component;
+import com.suiton2d.components.Renderer;
 import com.suiton2d.components.RigidBody;
 
 /**
@@ -36,10 +37,8 @@ public class GameObject extends Group {
 
     protected Array<Component> components;
     protected Layer layer;
-    protected AnimatedRenderer renderer;
+    protected Renderer renderer;
     protected RigidBody rigidBody;
-
-    public GameObject() {}
 
     public GameObject(String name) {
         setName(name);
@@ -54,7 +53,7 @@ public class GameObject extends Group {
         return layer;
     }
 
-    public AnimatedRenderer getRenderer() {
+    public Renderer getRenderer() {
         return renderer;
     }
 

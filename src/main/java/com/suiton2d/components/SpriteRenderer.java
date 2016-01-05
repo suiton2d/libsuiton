@@ -17,8 +17,6 @@ public class SpriteRenderer<T extends Animation> extends AnimatedRenderer<T> {
 
     private String filename;
 
-    public SpriteRenderer() {}
-
     public SpriteRenderer(String name, String filename) {
         super(name);
         this.filename = filename;

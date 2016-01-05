@@ -11,12 +11,10 @@ import com.suiton2d.scene.SceneManager;
 /**
  * @author Jon Bonazza <jonbonazza@gmail.com
  */
-public class TiledMapRenderer extends Component implements Renderer {
+public class TiledMapRenderer extends Renderer {
 
     private String filename;
     private OrthogonalTiledMapRenderer renderer;
-
-    public TiledMapRenderer() {}
 
     public TiledMapRenderer(String name, String filename) {
         super(name);
