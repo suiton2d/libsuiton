@@ -30,8 +30,6 @@ import com.suiton2d.assets.loaders.SoundEffectLoader;
 import com.suiton2d.assets.loaders.SpriteLoader;
 import com.suiton2d.assets.loaders.TiledTileSheetLoader;
 import com.suiton2d.scene.Scene;
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.ScriptableObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,19 +43,13 @@ import java.util.List;
 public class AssetManager {
 
     private static ObjectMap<String, List<AssetDescriptor>> assetMap = new ObjectMap<>();
-    private static ScriptableObject globalScriptScope;
+
     private static com.badlogic.gdx.assets.AssetManager manager;
 
     public static void init(FileHandleResolver fileHandleResolver) {
         manager = new com.badlogic.gdx.assets.AssetManager(fileHandleResolver);
         initLoaders(fileHandleResolver);
-        Context context = Context.enter();
-        context.setOptimizationLevel(-1);
-        try {
-            globalScriptScope = context.initStandardObjects();
-        } finally {
-            Context.exit();
-        }
+
     }
 
     private static void initLoaders(FileHandleResolver resolver) {
@@ -66,10 +58,6 @@ public class AssetManager {
         manager.setLoader(SoundEffect.class, new SoundEffectLoader(resolver));
         manager.setLoader(Sprite.class, new SpriteLoader(resolver));
         manager.setLoader(TiledTileSheet.class, new TiledTileSheetLoader(resolver));
-    }
-
-    public static ScriptableObject getGlobalScriptScope() {
-        return globalScriptScope;
     }
 
     public static <T> T getAsset(String filename, Class<T> type) {
