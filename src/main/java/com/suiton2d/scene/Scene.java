@@ -25,6 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.suiton2d.components.physics.CollisionListener;
 import com.suiton2d.components.physics.CollisionSolver;
 
 /**
@@ -32,7 +33,7 @@ import com.suiton2d.components.physics.CollisionSolver;
  *
  * @author Jon Bonazza <jonbonazza@gmail.com>
  */
-public class Scene {
+public class Scene implements CollisionListener {
 
     private String name;
     private Stage stage;
@@ -135,11 +136,13 @@ public class Scene {
             physicalWorld.dispose();
     }
 
+    @Override
     public void beginCollision(GameObject go1, GameObject go2) {
         for (Actor a : stage.getActors())
             ((Layer)a).beginCollision(go1, go2);
     }
 
+    @Override
     public void endCollision(GameObject go1, GameObject go2) {
         for (Actor a : stage.getActors())
             ((Layer)a).endCollision(go1, go2);

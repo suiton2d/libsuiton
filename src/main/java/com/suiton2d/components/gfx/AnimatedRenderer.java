@@ -20,7 +20,6 @@ package com.suiton2d.components.gfx;
 
 import com.badlogic.gdx.utils.Array;
 import com.suiton2d.components.anim.Animation;
-import com.suiton2d.scene.GameObject;
 
 /**
  * AnimatedRenderer is an abstract base class for rendering components
@@ -102,21 +101,5 @@ public abstract class AnimatedRenderer<T extends Animation> extends Renderer {
             if (anim.getName().equals(name))
                 currentAnimation = anim;
         }
-    }
-
-
-
-    public void finish() {
-
-    }
-
-    @Override
-    public void beginCollision(GameObject go1, GameObject go2) {
-
-    }
-
-    @Override
-    public void endCollision(GameObject go1, GameObject go2) {
-
     }
 }

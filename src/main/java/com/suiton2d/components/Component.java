@@ -45,21 +45,17 @@ public interface Component {
     /**
      * Called exactly once at the start of the {@link Scene}.
      */
-    void start();
+    default void start() {}
 
     /**
      * Called once per frame.
      * @param dt The time since the last frame update.
      */
-    void update(float dt);
+    default void update(float dt) {}
 
     /**
      * Called exactly once immediately before a {@link Scene}
      * is changed or ended otherwise.
      */
-    void finish();
-
-    void beginCollision(GameObject go1, GameObject go2);
-
-    void endCollision(GameObject go1, GameObject go2);
+    default void finish() {}
 }

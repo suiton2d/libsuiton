@@ -71,14 +71,4 @@ public class SpriteRenderer<T extends Animation> extends AnimatedRenderer<T> {
             }
         });
     }
-
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void update(float dt) {
-
-    }
 }

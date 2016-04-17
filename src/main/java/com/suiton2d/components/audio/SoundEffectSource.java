@@ -109,29 +109,4 @@ public class SoundEffectSource implements Component {
     public void resume(long soundId) {
         getSoundEffect().resume(soundId);
     }
-
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void update(float dt) {
-
-    }
-
-    @Override
-    public void finish() {
-
-    }
-
-    @Override
-    public void beginCollision(GameObject go1, GameObject go2) {
-
-    }
-
-    @Override
-    public void endCollision(GameObject go1, GameObject go2) {
-
-    }
 }

@@ -124,14 +124,4 @@ public class Collider<T extends CollisionShape> implements Component {
     public void finish() {
         SceneManager.getCurrentScene().getPhysicalWorld().destroyBody(physicalBody);
     }
-
-    @Override
-    public void beginCollision(GameObject go1, GameObject go2) {
-
-    }
-
-    @Override
-    public void endCollision(GameObject go1, GameObject go2) {
-
-    }
 }

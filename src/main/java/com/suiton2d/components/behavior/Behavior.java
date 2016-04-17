@@ -3,6 +3,7 @@ package com.suiton2d.components.behavior;
 import com.suiton2d.assets.AssetManager;
 import com.suiton2d.assets.Script;
 import com.suiton2d.components.Component;
+import com.suiton2d.components.physics.CollisionListener;
 import com.suiton2d.scene.GameObject;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
@@ -18,7 +19,7 @@ import java.util.Optional;
  *
  * @author      Jon Bonazza <jonbonazza@gmail.com>
  */
-public class Behavior implements Component {
+public class Behavior implements Component, CollisionListener {
 
     private Scriptable scope;
     private Function startFunction;

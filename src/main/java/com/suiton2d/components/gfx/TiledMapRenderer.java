@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.suiton2d.assets.AssetManager;
 import com.suiton2d.assets.TiledTileSheet;
-import com.suiton2d.scene.GameObject;
 import com.suiton2d.scene.SceneManager;
 
 /**
@@ -72,15 +71,5 @@ public class TiledMapRenderer extends Renderer {
     public void finish() {
         if (renderer != null)
             renderer.dispose();
-    }
-
-    @Override
-    public void beginCollision(GameObject go1, GameObject go2) {
-
-    }
-
-    @Override
-    public void endCollision(GameObject go1, GameObject go2) {
-
     }
 }

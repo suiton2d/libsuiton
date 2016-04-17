@@ -109,31 +109,6 @@ public class MusicSource implements Component {
         this.enabled = enabled;
     }
 
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void update(float dt) {
-
-    }
-
-    @Override
-    public void finish() {
-
-    }
-
-    @Override
-    public void beginCollision(GameObject go1, GameObject go2) {
-
-    }
-
-    @Override
-    public void endCollision(GameObject go1, GameObject go2) {
-
-    }
-
     /**
      * Sets a callback that is fired whenever MusicTrack playback completes.
      * @param listener The callback that will be fired on playback completion.

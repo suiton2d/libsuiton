@@ -26,6 +26,7 @@ import com.badlogic.gdx.utils.Array;
 import com.suiton2d.components.gfx.AnimatedRenderer;
 import com.suiton2d.components.Component;
 import com.suiton2d.components.gfx.Renderer;
+import com.suiton2d.components.physics.CollisionListener;
 import com.suiton2d.components.physics.RigidBody;
 
 /**
@@ -33,7 +34,7 @@ import com.suiton2d.components.physics.RigidBody;
  * It has a transform and a list components which describe the entity.
  * @author      Jon Bonazza <jonbonazza@gmail.com>
  */
-public class GameObject extends Group {
+public class GameObject extends Group implements CollisionListener {
 
     protected Array<Component> components;
     protected Layer layer;
@@ -154,17 +155,21 @@ public class GameObject extends Group {
         }
     }
 
+    @Override
     public void beginCollision(GameObject go1, GameObject go2) {
         for (Component c : components) {
-            if (c.isEnabled())
-                c.beginCollision(go1, go2);
+            if (c.isEnabled() && c instanceof CollisionListener) {
+                ((CollisionListener)c).beginCollision(go1, go2);
+            }
         }
     }
 
+    @Override
     public void endCollision(GameObject go1, GameObject go2) {
         for (Component c : components) {
-            if (c.isEnabled())
-                c.endCollision(go1, go2);
+            if (c.isEnabled() && c instanceof CollisionListener) {
+                ((CollisionListener)c).endCollision(go1, go2);
+            }
         }
     }
 }

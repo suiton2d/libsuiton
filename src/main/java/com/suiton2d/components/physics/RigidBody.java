@@ -119,26 +119,6 @@ public class RigidBody<T extends CollisionShape> implements Component {
         this.enabled = enabled;
     }
 
-    @Override
-    public void start() {
-        if (gameObject != null) {
-            BodyDef bodyDef = new BodyDef();
-            bodyDef.type = isKinematic ? BodyDef.BodyType.KinematicBody : BodyDef.BodyType.DynamicBody;
-            Transform transform = new Transform(gameObject);
-            Vector2 pos = transform.getPosition();
-            bodyDef.position.set(pos);
-            bodyDef.angle = transform.getRotation();
-            bodyDef.fixedRotation = fixedRotation;
-            bodyDef.bullet = isBullet;
-
-            physicsBody = SceneManager.getCurrentScene().getPhysicalWorld().createBody(bodyDef);
-            physicsBody.setUserData(getGameObject());
-            physicsBody.getMassData().mass = mass;
-
-            if (collisionShape != null)
-                collisionShape.affixTo(physicsBody, false).setUserData(gameObject);
-        }
-    }
 
     @SuppressWarnings("unused")
     public void applyForce(Vector2 force, Vector2 point, boolean wake) {
@@ -166,23 +146,29 @@ public class RigidBody<T extends CollisionShape> implements Component {
     }
 
     @Override
-    public void update(float dt) {
+    public void start() {
+        if (gameObject != null) {
+            BodyDef bodyDef = new BodyDef();
+            bodyDef.type = isKinematic ? BodyDef.BodyType.KinematicBody : BodyDef.BodyType.DynamicBody;
+            Transform transform = new Transform(gameObject);
+            Vector2 pos = transform.getPosition();
+            bodyDef.position.set(pos);
+            bodyDef.angle = transform.getRotation();
+            bodyDef.fixedRotation = fixedRotation;
+            bodyDef.bullet = isBullet;
 
+            physicsBody = SceneManager.getCurrentScene().getPhysicalWorld().createBody(bodyDef);
+            physicsBody.setUserData(getGameObject());
+            physicsBody.getMassData().mass = mass;
+
+            if (collisionShape != null)
+                collisionShape.affixTo(physicsBody, false).setUserData(gameObject);
+        }
     }
 
     @Override
     public void finish() {
         SceneManager.getCurrentScene().getPhysicalWorld().destroyBody(physicsBody);
         physicsBody = null;
-    }
-
-    @Override
-    public void beginCollision(GameObject go1, GameObject go2) {
-
-    }
-
-    @Override
-    public void endCollision(GameObject go1, GameObject go2) {
-
     }
 }

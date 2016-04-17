@@ -20,6 +20,7 @@ package com.suiton2d.scene;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.suiton2d.components.physics.CollisionListener;
 
 /**
  * Layer is a class used to provide logical order to the update of
@@ -29,7 +30,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
  *
  * @author Jon Bonazza <jonbonazza@gmail.com>
  */
-public class Layer extends Group {
+public class Layer extends Group implements CollisionListener {
 
     private String name;
     private int zOrder;
@@ -103,11 +104,13 @@ public class Layer extends Group {
             ((GameObject) actor).finish();
     }
 
+    @Override
     public void beginCollision(GameObject go1, GameObject go2) {
         for (Actor actor : getChildren())
             ((GameObject) actor).beginCollision(go1, go2);
     }
 
+    @Override
     public void endCollision(GameObject go1, GameObject go2) {
         for (Actor actor : getChildren())
             ((GameObject) actor).endCollision(go1, go2);
