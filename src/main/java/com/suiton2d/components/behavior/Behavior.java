@@ -1,7 +1,8 @@
-package com.suiton2d.components;
+package com.suiton2d.components.behavior;
 
 import com.suiton2d.assets.AssetManager;
 import com.suiton2d.assets.Script;
+import com.suiton2d.components.Component;
 import com.suiton2d.scene.GameObject;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;

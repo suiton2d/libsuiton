@@ -1,6 +1,7 @@
-package com.suiton2d.components;
+package com.suiton2d.components.gfx;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.suiton2d.components.Component;
 
 public abstract class Renderer extends Component {
 

@@ -25,7 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.suiton2d.util.CollisionListener;
+import com.suiton2d.components.physics.CollisionListener;
 
 /**
  * Scene is a class representing a single "level" in the game.

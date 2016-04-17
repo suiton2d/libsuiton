@@ -1,10 +1,11 @@
-package com.suiton2d.components;
+package com.suiton2d.components.gfx;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.suiton2d.assets.AssetManager;
 import com.suiton2d.assets.Sprite;
+import com.suiton2d.components.anim.Animation;
 import com.suiton2d.scene.Transform;
 
 /**

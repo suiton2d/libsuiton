@@ -16,9 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.suiton2d.components;
+package com.suiton2d.components.gfx;
 
 import com.badlogic.gdx.utils.Array;
+import com.suiton2d.components.anim.Animation;
 import com.suiton2d.scene.GameObject;
 
 /**

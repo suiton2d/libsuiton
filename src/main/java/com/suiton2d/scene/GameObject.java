@@ -23,10 +23,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
-import com.suiton2d.components.AnimatedRenderer;
+import com.suiton2d.components.gfx.AnimatedRenderer;
 import com.suiton2d.components.Component;
-import com.suiton2d.components.Renderer;
-import com.suiton2d.components.RigidBody;
+import com.suiton2d.components.gfx.Renderer;
+import com.suiton2d.components.physics.RigidBody;
 
 /**
  * GameObject is the core of Nebula2D's component-based entity system.

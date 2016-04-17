@@ -16,9 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.suiton2d.components;
+package com.suiton2d.components.physics;
 
-import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.google.gson.annotations.Expose;
 import com.suiton2d.scene.Transform;
@@ -26,31 +26,42 @@ import com.suiton2d.scene.Transform;
 /**
  * @author Jon Bonazza <jonbonazza@gmail.com>
  */
-public class Circle extends CollisionShape {
+public class BoundingBox extends CollisionShape {
 
-    @Expose
-    private float radius;
+    public static class Extents {
+        @Expose
+        public float halfw;
 
-    public Circle(PhysicsMaterial physicsMaterial, float radius) {
-        super(physicsMaterial);
-        this.radius = radius;
+        @Expose
+        public float halfh;
+
+        public Extents(float halfw, float halfh) {
+            this.halfw = halfw;
+            this.halfh = halfh;
+        }
     }
 
-    public float getRadius() {
-        return radius;
+    @Expose
+    private Extents extents;
+
+    public BoundingBox(PhysicsMaterial physicsMaterial, float w, float h) {
+        super(physicsMaterial);
+        extents = new Extents(w/2.0f, h/2.0f);
+    }
+
+    public Extents getExtents() {
+        return extents;
     }
 
     @SuppressWarnings("unused")
-    public void setRadius(float radius) {
-        this.radius = radius;
+    public void setExtents(Extents extents) {
+        this.extents = extents;
     }
 
     @Override
     protected Shape getShape(Transform transform) {
-        CircleShape circleShape = new CircleShape();
-        circleShape.setPosition(transform.getPosition());
-        circleShape.setRadius(radius);
-
-        return circleShape;
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(extents.halfw, extents.halfh, transform.getPosition(), transform.getRotation());
+        return shape;
     }
 }

@@ -1,7 +1,8 @@
-package com.suiton2d.components;
+package com.suiton2d.components.audio;
 
 import com.suiton2d.assets.AssetManager;
 import com.suiton2d.assets.SoundEffect;
+import com.suiton2d.components.Component;
 import com.suiton2d.scene.GameObject;
 
 /**

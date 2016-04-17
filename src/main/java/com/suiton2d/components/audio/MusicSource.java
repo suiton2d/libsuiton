@@ -1,8 +1,9 @@
-package com.suiton2d.components;
+package com.suiton2d.components.audio;
 
 import com.badlogic.gdx.audio.Music;
 import com.suiton2d.assets.AssetManager;
 import com.suiton2d.assets.MusicTrack;
+import com.suiton2d.components.Component;
 import com.suiton2d.scene.GameObject;
 
 /**

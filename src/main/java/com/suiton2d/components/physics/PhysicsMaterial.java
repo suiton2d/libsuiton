@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.suiton2d.components;
+package com.suiton2d.components.physics;
 
 /**
  * @author Jon Bonazza <jonbonazza@gmail.com>
