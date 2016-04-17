@@ -18,9 +18,10 @@
 
 package com.suiton2d.util;
 
-import com.google.common.base.Charsets;
-import com.google.common.io.BaseEncoding;
 import org.junit.Test;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 import static org.junit.Assert.assertEquals;
 
@@ -31,8 +32,8 @@ public class ByteUtilsTest {
 
     @Test
     public void testDecodeBase64String() {
-        byte[] bytes = "foo".getBytes(Charsets.US_ASCII);
-        String encodedString = BaseEncoding.base64().encode(bytes);
+        byte[] bytes = "foo".getBytes(StandardCharsets.US_ASCII);
+        String encodedString = Base64.getEncoder().encodeToString(bytes);
         String decodedString = ByteUtils.decodeBase64String(encodedString);
 
         assertEquals("foo", decodedString);

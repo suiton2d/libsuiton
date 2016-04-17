@@ -18,8 +18,8 @@
 
 package com.suiton2d.util;
 
-import com.google.common.base.Charsets;
-import com.google.common.io.BaseEncoding;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 /**
  * @author Jon Bonazza <jonbonazza@gmail.com>
@@ -27,7 +27,7 @@ import com.google.common.io.BaseEncoding;
 public class ByteUtils {
 
     public static String decodeBase64String(String base64) {
-        byte[] decodedBytes = BaseEncoding.base64().decode(base64);
-        return new String(decodedBytes, Charsets.US_ASCII);
+        byte[] decodedBytes = Base64.getDecoder().decode(base64);
+        return new String(decodedBytes, StandardCharsets.US_ASCII);
     }
 }
