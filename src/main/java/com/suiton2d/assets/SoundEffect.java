@@ -17,7 +17,7 @@ public class SoundEffect implements Asset<Sound> {
 
     public SoundEffect(String path, Sound sound) {
         this.path = path;
-        this.filename = path.substring(path.lastIndexOf("/"));
+        this.filename = path.substring(path.lastIndexOf("/")+1);
         this.sound = sound;
     }
 

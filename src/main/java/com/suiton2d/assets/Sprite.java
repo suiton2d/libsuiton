@@ -33,7 +33,7 @@ public class Sprite implements Asset<Texture> {
 
     public Sprite(String path, Texture texture) {
         this.path = path;
-        this.filename = path.substring(path.lastIndexOf("/"));
+        this.filename = path.substring(path.lastIndexOf("/")+1);
         this.texture = texture;
     }
 

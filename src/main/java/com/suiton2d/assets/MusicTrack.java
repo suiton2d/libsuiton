@@ -17,7 +17,7 @@ public class MusicTrack implements Asset<Music> {
 
     public MusicTrack(String path, Music track) {
         this.path = path;
-        this.filename = path.substring(path.lastIndexOf("/"));
+        this.filename = path.substring(path.lastIndexOf("/")+1);
         this.track = track;
     }
 

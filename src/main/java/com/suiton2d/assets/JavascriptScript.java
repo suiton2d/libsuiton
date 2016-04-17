@@ -43,7 +43,7 @@ public class JavascriptScript implements Script<Scriptable> {
                             Function beginCollisionFunction,
                             Function endCollisionFunction) {
         this.path = path;
-        this.filename = path.substring(path.lastIndexOf("/"));
+        this.filename = path.substring(path.lastIndexOf("/")+1);
         this.scope = scope;
         this.startFunction = startFunction;
         this.updateFunction = updateFunction;

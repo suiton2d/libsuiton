@@ -18,7 +18,7 @@ public class TileSheet<T extends Map> implements Asset<T> {
 
     public TileSheet(String path, T tileMap, TileSheetType type) {
         this.path = path;
-        this.filename = path.substring(path.lastIndexOf("/"));
+        this.filename = path.substring(path.lastIndexOf("/")+1);
         this.tileMap = tileMap;
         this.type = type;
         this.width = tileMap.getProperties().get("width", Integer.class);
