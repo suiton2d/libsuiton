@@ -20,10 +20,7 @@ package com.suiton2d.assets;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.badlogic.gdx.utils.XmlReader;
 import com.suiton2d.assets.loaders.MusicTrackLoader;
 import com.suiton2d.assets.loaders.ScriptLoader;
 import com.suiton2d.assets.loaders.SoundEffectLoader;
@@ -31,7 +28,6 @@ import com.suiton2d.assets.loaders.SpriteLoader;
 import com.suiton2d.assets.loaders.TiledTileSheetLoader;
 import com.suiton2d.scene.Scene;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,44 +85,12 @@ public class AssetManager {
         }
     }
 
-    public void installAssets(FileHandle assetsFile) throws IOException {
-        XmlReader reader = new XmlReader();
-        XmlReader.Element root = reader.parse(assetsFile);
-
-        Array<XmlReader.Element> assets = root.getChildrenByName("asset");
-        for (XmlReader.Element assetElement : assets) {
-            String path = assetElement.getAttribute("path");
-            String type = assetElement.getAttribute("assetType");
-            String sceneName = assetElement.getAttribute("sceneName");
-
-            List<AssetDescriptor> assetList = assetMap.get(sceneName);
-            if (assetList == null) {
-                assetList = new ArrayList<>();
-                assetMap.put(sceneName, assetList);
-            }
-            if (type.equalsIgnoreCase("SPRITE")) {
-                assetList.add(new AssetDescriptor<>(path, Sprite.class));
-            } else if (type.equalsIgnoreCase("MUSIC")) {
-                assetList.add(new AssetDescriptor<>(path, MusicTrack.class));
-            } else if (type.equalsIgnoreCase("SFX")) {
-                assetList.add(new AssetDescriptor<>(path, SoundEffect.class));
-            } else if (type.equalsIgnoreCase("SCRIPT")) {
-                assetList.add(new AssetDescriptor<>(path, Script.class));
-            } else if (type.equalsIgnoreCase("TILED_TILE_SHEET")) {
-                assetList.add(new AssetDescriptor<>(path, TiledTileSheet.class));
-            }
-
-            assetMap.put(sceneName, assetList);
-        }
-    }
-
-    public void addAsset(String sceneName, AssetDescriptor ad) {
+    public void registerAsset(String sceneName, AssetDescriptor ad) {
         List<AssetDescriptor> ads = assetMap.get(sceneName);
         if (ads == null) {
             ads = new ArrayList<>();
             assetMap.put(sceneName, ads);
         }
-
         ads.add(ad);
     }
 
