@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.suiton2d.assets.AssetManager;
 import com.suiton2d.assets.TiledTileSheet;
-import com.suiton2d.components.gfx.Renderer;
 import com.suiton2d.scene.GameObject;
 import com.suiton2d.scene.SceneManager;
 

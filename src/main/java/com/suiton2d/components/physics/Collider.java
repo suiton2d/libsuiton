@@ -26,17 +26,23 @@ import com.suiton2d.scene.GameObject;
 import com.suiton2d.scene.SceneManager;
 import com.suiton2d.scene.Transform;
 
+import java.util.Optional;
+
 /**
  * @author Jon Bonazza <jonbonazza@gmail.com>
  */
-public class Collider<T extends CollisionShape> extends Component {
+public class Collider<T extends CollisionShape> implements Component {
 
     protected boolean isSensor;
     protected T collisionShape;
     protected Body physicalBody;
 
+    private String name;
+    private GameObject gameObject;
+    private boolean enabled = true;
+
     public Collider(String name, T collisionShape, boolean isSensor) {
-        super(name);
+        this.name = name;
         this.isSensor = isSensor;
         this.collisionShape = collisionShape;
     }
@@ -58,22 +64,55 @@ public class Collider<T extends CollisionShape> extends Component {
     }
 
     @Override
-    public void start() {
-        BodyDef bodyDef = createBodyDef();
-        physicalBody = SceneManager.getCurrentScene().getPhysicalWorld().createBody(bodyDef);
-        physicalBody.setUserData(getGameObject());
-        collisionShape.affixTo(physicalBody, isSensor).setUserData(gameObject);
+    public String getName() {
+        return name;
     }
 
-    private BodyDef createBodyDef() {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public Optional<GameObject> getGameObject() {
+        return Optional.ofNullable(gameObject);
+    }
+
+    @Override
+    public void setGameObject(GameObject gameObject) {
+        this.gameObject = gameObject;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    @Override
+    public void start() {
+        createBodyDef().ifPresent(bodyDef -> {
+            physicalBody = SceneManager.getCurrentScene().getPhysicalWorld().createBody(bodyDef);
+            physicalBody.setUserData(getGameObject());
+            collisionShape.affixTo(physicalBody, isSensor).setUserData(gameObject);
+        });
+    }
+
+    private Optional<BodyDef> createBodyDef() {
+        if (gameObject == null) {
+            return Optional.empty();
+        }
+
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
-        Transform transform = new Transform(getGameObject());
+        Transform transform = new Transform(gameObject);
         Vector2 pos = transform.getPosition();
         bodyDef.position.set(pos);
         bodyDef.angle = (float) (transform.getRotation() * Math.PI / 180.0f);
-
-        return bodyDef;
+        return Optional.of(bodyDef);
     }
 
     @Override

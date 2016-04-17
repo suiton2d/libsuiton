@@ -47,27 +47,29 @@ public class SpriteRenderer<T extends Animation> extends AnimatedRenderer<T> {
 
     @Override
     public void render(Batch batch,  float dt) {
-        Camera cam = gameObject.getLayer().getScene().getCamera();
-        Transform transform = new Transform(gameObject);
-        if (currentAnimation != null) {
-            currentAnimation.render(transform, batch, cam, dt);
-        } else {
-            Sprite sprite = getSprite();
-            if (sprite != null) {
-                float halfw = sprite.getWidth() / 2.0f;
-                float halfh = sprite.getHeight() / 2.0f;
-                batch.draw(new TextureRegion(sprite.getData()),
-                        transform.getPosition().x - halfw,
-                        transform.getPosition().y - halfh,
-                        transform.getPosition().x - halfw,
-                        transform.getPosition().y - halfh,
-                        sprite.getWidth(),
-                        sprite.getHeight(),
-                        transform.getScale().x,
-                        transform.getScale().y,
-                        transform.getRotation());
+        getGameObject().ifPresent(gameObject -> {
+            Camera cam = gameObject.getLayer().getScene().getCamera();
+            Transform transform = new Transform(gameObject);
+            if (currentAnimation != null) {
+                currentAnimation.render(transform, batch, cam, dt);
+            } else {
+                Sprite sprite = getSprite();
+                if (sprite != null) {
+                    float halfw = sprite.getWidth() / 2.0f;
+                    float halfh = sprite.getHeight() / 2.0f;
+                    batch.draw(new TextureRegion(sprite.getData()),
+                            transform.getPosition().x - halfw,
+                            transform.getPosition().y - halfh,
+                            transform.getPosition().x - halfw,
+                            transform.getPosition().y - halfh,
+                            sprite.getWidth(),
+                            sprite.getHeight(),
+                            transform.getScale().x,
+                            transform.getScale().y,
+                            transform.getRotation());
+                }
             }
-        }
+        });
     }
 
     @Override

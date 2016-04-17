@@ -26,10 +26,12 @@ import com.suiton2d.scene.GameObject;
 import com.suiton2d.scene.SceneManager;
 import com.suiton2d.scene.Transform;
 
+import java.util.Optional;
+
 /**
  * @author Jon Bonazza <jonbonazza@gmail.com>
  */
-public class RigidBody<T extends CollisionShape> extends Component {
+public class RigidBody<T extends CollisionShape> implements Component {
 
     private boolean isKinematic;
     private boolean fixedRotation;
@@ -38,9 +40,13 @@ public class RigidBody<T extends CollisionShape> extends Component {
     private Body physicsBody;
     private T collisionShape;
 
+    private String name;
+    private GameObject gameObject;
+    private boolean enabled = true;
+
     public RigidBody(String name, T collisionShape, boolean isKinematic,
                      float mass, boolean fixedRotation, boolean isBullet) {
-        super(name);
+        this.name = name;
         this.isKinematic = isKinematic;
         this.fixedRotation = fixedRotation;
         this.isBullet = isBullet;
@@ -85,22 +91,53 @@ public class RigidBody<T extends CollisionShape> extends Component {
     }
 
     @Override
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public Optional<GameObject> getGameObject() {
+        return Optional.ofNullable(gameObject);
+    }
+
+    @Override
+    public void setGameObject(GameObject gameObject) {
+        this.gameObject = gameObject;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    @Override
     public void start() {
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = isKinematic ? BodyDef.BodyType.KinematicBody : BodyDef.BodyType.DynamicBody;
-        Transform transform = new Transform(getGameObject());
-        Vector2 pos = transform.getPosition();
-        bodyDef.position.set(pos);
-        bodyDef.angle = transform.getRotation();
-        bodyDef.fixedRotation = fixedRotation;
-        bodyDef.bullet = isBullet;
+        if (gameObject != null) {
+            BodyDef bodyDef = new BodyDef();
+            bodyDef.type = isKinematic ? BodyDef.BodyType.KinematicBody : BodyDef.BodyType.DynamicBody;
+            Transform transform = new Transform(gameObject);
+            Vector2 pos = transform.getPosition();
+            bodyDef.position.set(pos);
+            bodyDef.angle = transform.getRotation();
+            bodyDef.fixedRotation = fixedRotation;
+            bodyDef.bullet = isBullet;
 
-        physicsBody = SceneManager.getCurrentScene().getPhysicalWorld().createBody(bodyDef);
-        physicsBody.setUserData(getGameObject());
-        physicsBody.getMassData().mass = mass;
+            physicsBody = SceneManager.getCurrentScene().getPhysicalWorld().createBody(bodyDef);
+            physicsBody.setUserData(getGameObject());
+            physicsBody.getMassData().mass = mass;
 
-        if (collisionShape != null)
-            collisionShape.affixTo(physicsBody, false).setUserData(gameObject);
+            if (collisionShape != null)
+                collisionShape.affixTo(physicsBody, false).setUserData(gameObject);
+        }
     }
 
     @SuppressWarnings("unused")

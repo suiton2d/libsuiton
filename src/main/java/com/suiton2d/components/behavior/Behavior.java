@@ -9,6 +9,8 @@ import org.mozilla.javascript.Function;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
 
+import java.util.Optional;
+
 /**
  * Behavior is a {@link Component} for executing
  * {@link Script} assets, providing custom functionality to
@@ -16,7 +18,7 @@ import org.mozilla.javascript.ScriptableObject;
  *
  * @author      Jon Bonazza <jonbonazza@gmail.com>
  */
-public class Behavior extends Component {
+public class Behavior implements Component {
 
     private Scriptable scope;
     private Function startFunction;
@@ -26,10 +28,12 @@ public class Behavior extends Component {
     private Function endCollisionFunction;
 
     private String filename;
+    private String name;
+    private GameObject gameObject;
+    private boolean enabled = true;
 
     public Behavior(String name, String filename) {
-        super(name);
-
+        this.name = name;
         this.filename = filename;
     }
 
@@ -62,6 +66,35 @@ public class Behavior extends Component {
 
     public Script getScript() {
         return AssetManager.getAsset(filename, Script.class);
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public Optional<GameObject> getGameObject() {
+        return Optional.ofNullable(gameObject);
+    }
+
+    @Override
+    public void setGameObject(GameObject gameObject) {
+        this.gameObject = gameObject;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override

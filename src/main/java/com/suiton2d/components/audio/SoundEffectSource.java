@@ -5,18 +5,23 @@ import com.suiton2d.assets.SoundEffect;
 import com.suiton2d.components.Component;
 import com.suiton2d.scene.GameObject;
 
+import java.util.Optional;
+
 /**
  * SoundEffectSource is a {@link Component} used for the
  * playback of sound effects.
  *
  * @author      Jon Bonazza <jonbonazza@gmail.com>
  */
-public class SoundEffectSource extends Component {
+public class SoundEffectSource implements Component {
 
     private String filename;
+    private String name;
+    private GameObject gameObject;
+    private boolean enabled = true;
 
     public SoundEffectSource(String name, String filename) {
-        super(name);
+        this.name = name;
         this.filename = filename;
     }
 
@@ -30,6 +35,35 @@ public class SoundEffectSource extends Component {
 
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public Optional<GameObject> getGameObject() {
+        return Optional.ofNullable(gameObject);
+    }
+
+    @Override
+    public void setGameObject(GameObject gameObject) {
+        this.gameObject = gameObject;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     /**

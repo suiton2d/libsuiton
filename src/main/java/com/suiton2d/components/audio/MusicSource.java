@@ -6,18 +6,23 @@ import com.suiton2d.assets.MusicTrack;
 import com.suiton2d.components.Component;
 import com.suiton2d.scene.GameObject;
 
+import java.util.Optional;
+
 /**
  * MusicSource is a {@link Component} used for the playback of
  * music files.
  *
  * @author      Jon Bonazza <jonbonazza@gmail.com>
  */
-public class MusicSource extends Component {
+public class MusicSource implements Component {
 
     private String filename;
+    private String name;
+    private GameObject gameObject;
+    private boolean enabled = true;
 
     public MusicSource(String name, String filename) {
-        super(name);
+        this.name = name;
         this.filename = filename;
     }
 
@@ -74,6 +79,34 @@ public class MusicSource extends Component {
     @SuppressWarnings("unused")
     public void setVolume(float volume) {
         getMusicTrack().getData().setVolume(volume);
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public Optional<GameObject> getGameObject() {
+        return Optional.ofNullable(gameObject);
+    }
+
+    @Override
+    public void setGameObject(GameObject gameObject) {
+        this.gameObject = gameObject;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override

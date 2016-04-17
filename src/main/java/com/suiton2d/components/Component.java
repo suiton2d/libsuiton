@@ -21,64 +21,45 @@ package com.suiton2d.components;
 import com.suiton2d.scene.GameObject;
 import com.suiton2d.scene.Scene;
 
+import java.util.Optional;
+
 /**
- * Component is an abstract base class for nebula2d's components.
+ * Component is an interface for nebula2d's components.
  * Components are an integral part of N2D's component-bsaed entity
  * system. components define the functionality for {@link GameObject}.
  *
  * @author Jon Bonazza
  */
-public abstract class Component {
-    protected String name;
-    protected GameObject gameObject;
-    protected boolean enabled;
+public interface Component {
 
-    public Component(String name) {
-        this.name = name;
-    }
+    String getName();
 
-    public String getName() {
-        return name;
-    }
+    Optional<GameObject> getGameObject();
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    void setGameObject(GameObject gameObject);
 
-    public GameObject getGameObject() {
-        return gameObject;
-    }
+    boolean isEnabled();
 
-    public void setGameObject(GameObject gameObject) {
-        this.gameObject = gameObject;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
+    void setEnabled(boolean enabled);
 
     /**
-     * Abstract callback method called exactly once at the start of the {@link Scene}.
+     * Called exactly once at the start of the {@link Scene}.
      */
-    public abstract void start();
+    void start();
 
     /**
-     * Abstract callback method called once per frame.
+     * Called once per frame.
      * @param dt The time since the last frame update.
      */
-    public abstract void update(float dt);
+    void update(float dt);
 
     /**
-     * Abstract callback method called exactly once immediately before a {@link Scene}
+     * Called exactly once immediately before a {@link Scene}
      * is changed or ended otherwise.
      */
-    public abstract void finish();
+    void finish();
 
-    public abstract void beginCollision(GameObject go1, GameObject go2);
+    void beginCollision(GameObject go1, GameObject go2);
 
-    public abstract void endCollision(GameObject go1, GameObject go2);
+    void endCollision(GameObject go1, GameObject go2);
 }
