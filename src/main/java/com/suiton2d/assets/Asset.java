@@ -21,45 +21,15 @@ package com.suiton2d.assets;
 import com.badlogic.gdx.utils.Disposable;
 
 /**
- * Asset is an abstract base class for a game resource,
- * such as audio files, image files, script fiels, etc...
+ * Asset is an interface for a game resource,
+ * such as audio files, image files, script files, etc...
  *
  * @author Jon Bonazza <jonbonazza@gmail.com>
  */
-public abstract class Asset<T> implements Disposable {
-
-    protected String filename;
-    protected String path;
-    protected boolean loaded;
-
-    protected T data;
-
-    protected Asset(String path, T data) {
-        this.path = path;
-        this.filename = path.substring(path.lastIndexOf("/"));
-        this.loaded = false;
-        this.data = data;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public String getFilename() {
-        return filename;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    @SuppressWarnings("unused")
-    public boolean isLoaded() {
-        return loaded;
-    }
-
-    public void dispose() {
-        if (data != null && data instanceof Disposable)
-            ((Disposable) data).dispose();
-    }
+public interface Asset<T> extends Disposable {
+    T getData();
+    String getFilename();
+    String getPath();
+    boolean isLoaded();
+    void setLoaded(boolean loaded);
 }

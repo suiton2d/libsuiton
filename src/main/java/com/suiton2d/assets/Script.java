@@ -7,9 +7,5 @@ package com.suiton2d.assets;
  *
  * @author      Jon Bonazza <jonbonazza@gmail.com>
  */
-public class Script extends Asset<String> {
-
-    public Script(String path, String content) {
-        super(path, content);
-    }
+public interface Script extends Asset<String> {
 }

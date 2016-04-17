@@ -24,17 +24,56 @@ import com.badlogic.gdx.graphics.Texture;
  * Sprite is a wrapper class around libGdx's Texture class
  * for 2D textures
  */
-public class Sprite extends Asset<Texture> {
+public class Sprite implements Asset<Texture> {
+
+    private String path;
+    private String filename;
+    private boolean loaded = false;
+    private Texture texture;
 
     public Sprite(String path, Texture texture) {
-        super(path, texture);
+        this.path = path;
+        this.filename = path.substring(path.lastIndexOf("/"));
+        this.texture = texture;
     }
 
     public int getWidth() {
-        return data.getWidth();
+        return texture.getWidth();
     }
 
     public int getHeight() {
-        return data.getHeight();
+        return texture.getHeight();
+    }
+
+    @Override
+    public Texture getData() {
+        return texture;
+    }
+
+    @Override
+    public String getFilename() {
+        return filename;
+    }
+
+    @Override
+    public String getPath() {
+        return path;
+    }
+
+    @Override
+    public boolean isLoaded() {
+        return loaded;
+    }
+
+    @Override
+    public void setLoaded(boolean loaded) {
+        this.loaded = loaded;
+    }
+
+    @Override
+    public void dispose() {
+        if (texture != null) {
+            texture.dispose();
+        }
     }
 }

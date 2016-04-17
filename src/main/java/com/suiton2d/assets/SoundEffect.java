@@ -8,10 +8,17 @@ import com.badlogic.gdx.audio.Sound;
  *
  * @author      Jon Bonazza <jonbonazza@gmail.com>
  */
-public class SoundEffect extends Asset<Sound> {
+public class SoundEffect implements Asset<Sound> {
+
+    private String path;
+    private String filename;
+    private boolean loaded = false;
+    private Sound sound;
 
     public SoundEffect(String path, Sound sound) {
-        super(path, sound);
+        this.path = path;
+        this.filename = path.substring(path.lastIndexOf("/"));
+        this.sound = sound;
     }
 
     /**
@@ -19,7 +26,7 @@ public class SoundEffect extends Asset<Sound> {
      * @return The sound ID associated with the current playback instance.
      */
     public long play() {
-        return data.play();
+        return sound.play();
     }
 
     /**
@@ -29,7 +36,7 @@ public class SoundEffect extends Asset<Sound> {
      */
     @SuppressWarnings("unused")
     public long play(float volume) {
-        return data.play(volume);
+        return sound.play(volume);
     }
 
     /**
@@ -37,7 +44,7 @@ public class SoundEffect extends Asset<Sound> {
      * @return The sound ID associated with th current playback instance.
      */
     public long loop() {
-        return data.loop();
+        return sound.loop();
     }
 
     /**
@@ -47,7 +54,7 @@ public class SoundEffect extends Asset<Sound> {
      */
     @SuppressWarnings("unused")
     public long loop(float volume) {
-        return data.loop(volume);
+        return sound.loop(volume);
     }
 
     /**
@@ -55,7 +62,7 @@ public class SoundEffect extends Asset<Sound> {
      * @param soundId The sound ID of the playback instance to stop.
      */
     public void stop(long soundId) {
-        data.stop(soundId);
+        sound.stop(soundId);
     }
 
     /**
@@ -63,7 +70,7 @@ public class SoundEffect extends Asset<Sound> {
      * @param soundId The sound ID of the playback instance to pause.
      */
     public void pause(long soundId) {
-        data.pause(soundId);
+        sound.pause(soundId);
     }
 
     /**
@@ -72,6 +79,38 @@ public class SoundEffect extends Asset<Sound> {
      * @param soundId The sound ID of the playback instance to resume.
      */
     public void resume(long soundId) {
-        data.resume(soundId);
+        sound.resume(soundId);
+    }
+
+    @Override
+    public Sound getData() {
+        return sound;
+    }
+
+    @Override
+    public String getFilename() {
+        return filename;
+    }
+
+    @Override
+    public String getPath() {
+        return path;
+    }
+
+    @Override
+    public boolean isLoaded() {
+        return loaded;
+    }
+
+    @Override
+    public void setLoaded(boolean loaded) {
+        this.loaded = loaded;
+    }
+
+    @Override
+    public void dispose() {
+        if (sound != null) {
+            sound.dispose();
+        }
     }
 }
