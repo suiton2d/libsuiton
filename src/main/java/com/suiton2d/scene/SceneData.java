@@ -3,19 +3,13 @@ package com.suiton2d.scene;
 import com.badlogic.gdx.utils.ObjectMap;
 
 /**
- * SceneData is a read-only collection of all of a game's scene's and their associated names.
+ * SceneData is a collection of all of a game's scene's and their associated names.
  */
-public class SceneData {
-    private ObjectMap<String, Scene> sceneMap;
+public class SceneData extends ObjectMap<String, Scene> {
     private String startScene;
 
-    public SceneData(ObjectMap<String, Scene> sceneMap, String startScene) {
-        this.sceneMap = sceneMap;
+    public SceneData(String startScene) {
         this.startScene = startScene;
-    }
-
-    public ObjectMap<String, Scene> getSceneMap() {
-        return sceneMap;
     }
 
     public String getStartScene() {

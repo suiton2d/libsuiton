@@ -36,23 +36,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * AssetManager is a singleton class used to manage a game's assets
+ * AssetManager is a class used to manage a game's assets
  *
  * @author Jon Bonazza <jonbonazza@gmail.com>
  */
 public class AssetManager {
 
-    private static ObjectMap<String, List<AssetDescriptor>> assetMap = new ObjectMap<>();
+    private ObjectMap<String, List<AssetDescriptor>> assetMap = new ObjectMap<>();
 
-    private static com.badlogic.gdx.assets.AssetManager manager;
+    private com.badlogic.gdx.assets.AssetManager manager;
 
-    public static void init(FileHandleResolver fileHandleResolver) {
+    public AssetManager(FileHandleResolver fileHandleResolver) {
         manager = new com.badlogic.gdx.assets.AssetManager(fileHandleResolver);
         initLoaders(fileHandleResolver);
-
     }
 
-    private static void initLoaders(FileHandleResolver resolver) {
+    private void initLoaders(FileHandleResolver resolver) {
         manager.setLoader(MusicTrack.class, new MusicTrackLoader(resolver));
         manager.setLoader(Script.class, new ScriptLoader(resolver));
         manager.setLoader(SoundEffect.class, new SoundEffectLoader(resolver));
@@ -60,7 +59,7 @@ public class AssetManager {
         manager.setLoader(TiledTileSheet.class, new TiledTileSheetLoader(resolver));
     }
 
-    public static <T> T getAsset(String filename, Class<T> type) {
+    public <T> T getAsset(String filename, Class<T> type) {
         return manager.isLoaded(filename) ? manager.get(filename, type) : null;
     }
 
@@ -68,7 +67,7 @@ public class AssetManager {
      * Loads the assets for the {@link Scene} with the given name into memory.
      * @param sceneName the name of the Scene whose assets should be loaded.
      */
-    public static void loadAssets(String sceneName) {
+    public void loadAssets(String sceneName) {
         List<AssetDescriptor> assets = assetMap.get(sceneName);
         if (assets != null) {
             for (AssetDescriptor asset : assets)
@@ -82,7 +81,7 @@ public class AssetManager {
      * Unloads the assets for the Scene with the given name from memory.
      * @param sceneName the name of the Scene whose assets should be unloaded.
      */
-    public static void unloadAssets(String sceneName) {
+    public void unloadAssets(String sceneName) {
         List<AssetDescriptor> assets = assetMap.get(sceneName);
         if (assets != null) {
             for (AssetDescriptor asset : assets)
@@ -90,7 +89,7 @@ public class AssetManager {
         }
     }
 
-    public static void installAssets(FileHandle assetsFile) throws IOException {
+    public void installAssets(FileHandle assetsFile) throws IOException {
         XmlReader reader = new XmlReader();
         XmlReader.Element root = reader.parse(assetsFile);
 
@@ -121,7 +120,7 @@ public class AssetManager {
         }
     }
 
-    public static void addAsset(String sceneName, AssetDescriptor ad) {
+    public void addAsset(String sceneName, AssetDescriptor ad) {
         List<AssetDescriptor> ads = assetMap.get(sceneName);
         if (ads == null) {
             ads = new ArrayList<>();
@@ -131,7 +130,7 @@ public class AssetManager {
         ads.add(ad);
     }
 
-    public static void cleanup() {
+    public void cleanup() {
         for (List<AssetDescriptor> assetList : assetMap.values()) {
             assetList.stream()
                     .filter(asset -> manager.isLoaded(asset.fileName))

@@ -15,18 +15,20 @@ import java.util.Optional;
  */
 public class SoundEffectSource implements Component {
 
+    private AssetManager assetManager;
     private String filename;
     private String name;
     private GameObject gameObject;
     private boolean enabled = true;
 
-    public SoundEffectSource(String name, String filename) {
+    public SoundEffectSource(String name, String filename, AssetManager assetManager) {
         this.name = name;
         this.filename = filename;
+        this.assetManager = assetManager;
     }
 
     public SoundEffect getSoundEffect() {
-        return AssetManager.getAsset(filename, SoundEffect.class);
+        return assetManager.getAsset(filename, SoundEffect.class);
     }
 
     public String getFilename() {

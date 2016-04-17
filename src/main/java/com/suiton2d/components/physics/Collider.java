@@ -21,9 +21,9 @@ package com.suiton2d.components.physics;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.World;
 import com.suiton2d.components.Component;
 import com.suiton2d.scene.GameObject;
-import com.suiton2d.scene.SceneManager;
 import com.suiton2d.scene.Transform;
 
 import java.util.Optional;
@@ -33,6 +33,8 @@ import java.util.Optional;
  */
 public class Collider<T extends CollisionShape> implements Component {
 
+    private World world;
+
     protected boolean isSensor;
     protected T collisionShape;
     protected Body physicalBody;
@@ -41,10 +43,11 @@ public class Collider<T extends CollisionShape> implements Component {
     private GameObject gameObject;
     private boolean enabled = true;
 
-    public Collider(String name, T collisionShape, boolean isSensor) {
+    public Collider(String name, T collisionShape, boolean isSensor, World world) {
         this.name = name;
         this.isSensor = isSensor;
         this.collisionShape = collisionShape;
+        this.world = world;
     }
 
     public boolean isSensor() {
@@ -95,7 +98,7 @@ public class Collider<T extends CollisionShape> implements Component {
     @Override
     public void start() {
         createBodyDef().ifPresent(bodyDef -> {
-            physicalBody = SceneManager.getCurrentScene().getPhysicalWorld().createBody(bodyDef);
+            physicalBody = world.createBody(bodyDef);
             physicalBody.setUserData(getGameObject());
             collisionShape.affixTo(physicalBody, isSensor).setUserData(gameObject);
         });
@@ -122,6 +125,6 @@ public class Collider<T extends CollisionShape> implements Component {
 
     @Override
     public void finish() {
-        SceneManager.getCurrentScene().getPhysicalWorld().destroyBody(physicalBody);
+        world.destroyBody(physicalBody);
     }
 }

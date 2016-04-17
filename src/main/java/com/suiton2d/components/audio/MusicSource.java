@@ -16,14 +16,16 @@ import java.util.Optional;
  */
 public class MusicSource implements Component {
 
+    private AssetManager assetManager;
     private String filename;
     private String name;
     private GameObject gameObject;
     private boolean enabled = true;
 
-    public MusicSource(String name, String filename) {
+    public MusicSource(String name, String filename, AssetManager assetManager) {
         this.name = name;
         this.filename = filename;
+        this.assetManager = assetManager;
     }
 
     public String getFilename() {
@@ -35,7 +37,7 @@ public class MusicSource implements Component {
     }
 
     public MusicTrack getMusicTrack() {
-        return AssetManager.getAsset(filename, MusicTrack.class);
+        return assetManager.getAsset(filename, MusicTrack.class);
     }
     /**
      * Plays the {@link MusicTrack}.

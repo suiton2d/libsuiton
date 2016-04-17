@@ -21,9 +21,9 @@ package com.suiton2d.components.physics;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.World;
 import com.suiton2d.components.Component;
 import com.suiton2d.scene.GameObject;
-import com.suiton2d.scene.SceneManager;
 import com.suiton2d.scene.Transform;
 
 import java.util.Optional;
@@ -32,6 +32,8 @@ import java.util.Optional;
  * @author Jon Bonazza <jonbonazza@gmail.com>
  */
 public class RigidBody<T extends CollisionShape> implements Component {
+
+    private World world;
 
     private boolean isKinematic;
     private boolean fixedRotation;
@@ -45,13 +47,15 @@ public class RigidBody<T extends CollisionShape> implements Component {
     private boolean enabled = true;
 
     public RigidBody(String name, T collisionShape, boolean isKinematic,
-                     float mass, boolean fixedRotation, boolean isBullet) {
+                     float mass, boolean fixedRotation, boolean isBullet,
+                     World world) {
         this.name = name;
         this.isKinematic = isKinematic;
         this.fixedRotation = fixedRotation;
         this.isBullet = isBullet;
         this.collisionShape = collisionShape;
         this.mass = mass;
+        this.world = world;
     }
 
     public boolean isKinematic() {
@@ -157,7 +161,7 @@ public class RigidBody<T extends CollisionShape> implements Component {
             bodyDef.fixedRotation = fixedRotation;
             bodyDef.bullet = isBullet;
 
-            physicsBody = SceneManager.getCurrentScene().getPhysicalWorld().createBody(bodyDef);
+            physicsBody = world.createBody(bodyDef);
             physicsBody.setUserData(getGameObject());
             physicsBody.getMassData().mass = mass;
 
@@ -168,7 +172,7 @@ public class RigidBody<T extends CollisionShape> implements Component {
 
     @Override
     public void finish() {
-        SceneManager.getCurrentScene().getPhysicalWorld().destroyBody(physicsBody);
+        world.destroyBody(physicsBody);
         physicsBody = null;
     }
 }

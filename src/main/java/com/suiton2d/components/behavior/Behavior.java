@@ -16,14 +16,16 @@ import java.util.Optional;
  * @author      Jon Bonazza <jonbonazza@gmail.com>
  */
 public class Behavior implements Component, CollisionListener {
+    private AssetManager assetManager;
     private String filename;
     private String name;
     private GameObject gameObject;
     private boolean enabled = true;
 
-    public Behavior(String name, String filename) {
+    public Behavior(String name, String filename, AssetManager assetManager) {
         this.name = name;
         this.filename = filename;
+        this.assetManager = assetManager;
     }
 
     public String getFilename() {
@@ -35,7 +37,7 @@ public class Behavior implements Component, CollisionListener {
     }
 
     public Script getScript() {
-        return AssetManager.getAsset(filename, Script.class);
+        return assetManager.getAsset(filename, Script.class);
     }
 
     @Override

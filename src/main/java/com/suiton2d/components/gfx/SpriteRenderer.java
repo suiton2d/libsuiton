@@ -16,11 +16,13 @@ import com.suiton2d.scene.Transform;
  */
 public class SpriteRenderer<T extends Animation> extends AnimatedRenderer<T> {
 
+    private AssetManager assetManager;
     private String filename;
 
-    public SpriteRenderer(String name, String filename) {
+    public SpriteRenderer(String name, String filename, AssetManager assetManager) {
         super(name);
         this.filename = filename;
+        this.assetManager = assetManager;
     }
 
     public String getFilename() {
@@ -32,7 +34,7 @@ public class SpriteRenderer<T extends Animation> extends AnimatedRenderer<T> {
     }
 
     public Sprite getSprite() {
-        return AssetManager.getAsset(filename, Sprite.class);
+        return assetManager.getAsset(filename, Sprite.class);
     }
 
     @Override

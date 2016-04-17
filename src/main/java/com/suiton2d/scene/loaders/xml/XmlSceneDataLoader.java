@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.XmlReader;
+import com.suiton2d.assets.AssetManager;
 import com.suiton2d.components.Component;
 import com.suiton2d.components.audio.MusicSource;
 import com.suiton2d.components.audio.SoundEffectSource;
@@ -31,12 +32,12 @@ import java.io.IOException;
 public class XmlSceneDataLoader implements SceneDataLoader {
     @Override
     @SuppressWarnings("unchecked")
-    public SceneData loadSceneData(FileHandle file) throws IOException {
+    public SceneData loadSceneData(AssetManager assetManager, FileHandle file) throws IOException {
         XmlReader reader = new XmlReader();
         XmlReader.Element root = reader.parse(file);
         Array<XmlReader.Element> sceneElements = root.getChildrenByName("scene");
         String startScene = root.getAttribute("startScene");
-        ObjectMap<String, Scene> sceneMap = new ObjectMap<>();
+        SceneData sceneData = new SceneData(startScene);
         for (XmlReader.Element sceneElement : sceneElements) {
             String sceneName = sceneElement.getAttribute("name");
             XmlReader.Element gravityElement = sceneElement.getChildByName("gravity");
@@ -77,20 +78,21 @@ public class XmlSceneDataLoader implements SceneDataLoader {
                             String rendererType = componentElement.getAttribute("rendererType");
                             if (rendererType.equalsIgnoreCase("SPRITE_RENDERER")) {
                                 String spritePath = componentElement.getAttribute("sprite");
-                                component = new SpriteRenderer(componentName, spritePath);
+                                component = new SpriteRenderer(componentName, spritePath,
+                                        assetManager);
                             } else if (rendererType.equalsIgnoreCase("TILE_MAP_RENDERER")) {
                                 String tileSheetPath = componentElement.getAttribute("tileSheet");
-                                component = new TiledMapRenderer(componentName, tileSheetPath);
+                                component = new TiledMapRenderer(componentName, tileSheetPath, scene, assetManager);
                             }
                         } else if (componentType.equalsIgnoreCase("MUSIC")) {
                             String trackPath = componentElement.getAttribute("track");
-                            component = new MusicSource(componentName, trackPath);
+                            component = new MusicSource(componentName, trackPath, assetManager);
                         } else if (componentType.equalsIgnoreCase("SFX")) {
                             String sfxPath = componentElement.getAttribute("sfx");
-                            component = new SoundEffectSource(componentName, sfxPath);
+                            component = new SoundEffectSource(componentName, sfxPath, assetManager);
                         } else if (componentType.equalsIgnoreCase("BEHAVE")) {
                             String scriptPath = componentElement.getAttribute("script");
-                            component = new Behavior(componentName, scriptPath);
+                            component = new Behavior(componentName, scriptPath, assetManager);
                         } else if (componentType.equalsIgnoreCase("RIGID_BODY")) {
                             boolean isKinematic = componentElement.getBooleanAttribute("isKinematic");
                             boolean fixedRotation = componentElement.getBooleanAttribute("fixedRotation");
@@ -118,7 +120,7 @@ public class XmlSceneDataLoader implements SceneDataLoader {
 
                             if (shape != null) {
                                 component = new RigidBody(componentName, shape, isKinematic, mass,
-                                        fixedRotation, isBullet);
+                                        fixedRotation, isBullet, scene.getPhysicalWorld());
                             }
                         } else if (componentType.equalsIgnoreCase("COLLIDER")) {
                             boolean isSensor = componentElement.getBooleanAttribute("isSensor");
@@ -143,7 +145,7 @@ public class XmlSceneDataLoader implements SceneDataLoader {
                             }
 
                             if (shape != null) {
-                                component = new Collider(componentName, shape, isSensor);
+                                component = new Collider(componentName, shape, isSensor, scene.getPhysicalWorld());
                             }
                         }
 
@@ -152,16 +154,12 @@ public class XmlSceneDataLoader implements SceneDataLoader {
                             gameObject.addComponent(component);
                         }
                     }
-
                     layer.addActor(gameObject);
                 }
-
                 scene.addLayer(layer);
             }
-
-            sceneMap.put(sceneName, scene);
+            sceneData.put(scene.getName(), scene);
         }
-
-        return new SceneData(sceneMap, startScene);
+        return sceneData;
     }
 }
