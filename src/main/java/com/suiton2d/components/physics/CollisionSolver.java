@@ -28,11 +28,11 @@ import com.suiton2d.scene.Scene;
 /**
  * @author Jon Bonazza <jonbonazza@gmail.com>
  */
-public class CollisionListener implements ContactListener {
+public class CollisionSolver implements ContactListener {
 
     private Scene scene;
 
-    public CollisionListener(Scene scene) {
+    public CollisionSolver(Scene scene) {
         this.scene = scene;
     }
 

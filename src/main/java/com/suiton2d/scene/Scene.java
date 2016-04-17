@@ -25,7 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.suiton2d.components.physics.CollisionListener;
+import com.suiton2d.components.physics.CollisionSolver;
 
 /**
  * Scene is a class representing a single "level" in the game.
@@ -41,7 +41,7 @@ public class Scene {
 
     public Scene(String name, Vector2 gravity, boolean sleepPhysics) {
         physicalWorld = new World(gravity, sleepPhysics);
-        physicalWorld.setContactListener(new CollisionListener(this));
+        physicalWorld.setContactListener(new CollisionSolver(this));
         stage = new Stage(new ScreenViewport());
         this.name = name;
         this.allowSleeping = sleepPhysics;
