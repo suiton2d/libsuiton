@@ -5,8 +5,6 @@ import com.suiton2d.assets.SoundEffect;
 import com.suiton2d.components.Component;
 import com.suiton2d.scene.GameObject;
 
-import java.util.Optional;
-
 /**
  * SoundEffectSource is a {@link Component} used for the
  * playback of sound effects.
@@ -49,8 +47,8 @@ public class SoundEffectSource implements Component {
     }
 
     @Override
-    public Optional<GameObject> getGameObject() {
-        return Optional.ofNullable(gameObject);
+    public GameObject getGameObject() {
+        return gameObject;
     }
 
     @Override

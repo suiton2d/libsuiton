@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.suiton2d.assets.AssetManager;
 import com.suiton2d.assets.Sprite;
 import com.suiton2d.components.anim.Animation;
+import com.suiton2d.scene.GameObject;
 import com.suiton2d.scene.Transform;
 
 /**
@@ -49,7 +50,8 @@ public class SpriteRenderer<T extends Animation> extends AnimatedRenderer<T> {
 
     @Override
     public void render(Batch batch,  float dt) {
-        getGameObject().ifPresent(gameObject -> {
+        GameObject gameObject = getGameObject();
+        if (gameObject != null) {
             Camera cam = gameObject.getLayer().getScene().getCamera();
             Transform transform = new Transform(gameObject);
             if (currentAnimation != null) {
@@ -71,6 +73,6 @@ public class SpriteRenderer<T extends Animation> extends AnimatedRenderer<T> {
                             transform.getRotation());
                 }
             }
-        });
+        }
     }
 }

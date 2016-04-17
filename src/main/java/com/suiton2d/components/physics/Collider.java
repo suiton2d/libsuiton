@@ -76,8 +76,8 @@ public class Collider<T extends CollisionShape> implements Component {
     }
 
     @Override
-    public Optional<GameObject> getGameObject() {
-        return Optional.ofNullable(gameObject);
+    public GameObject getGameObject() {
+        return gameObject;
     }
 
     @Override

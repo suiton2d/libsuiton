@@ -26,8 +26,6 @@ import com.suiton2d.components.Component;
 import com.suiton2d.scene.GameObject;
 import com.suiton2d.scene.Transform;
 
-import java.util.Optional;
-
 /**
  * @author Jon Bonazza <jonbonazza@gmail.com>
  */
@@ -104,8 +102,8 @@ public class RigidBody<T extends CollisionShape> implements Component {
     }
 
     @Override
-    public Optional<GameObject> getGameObject() {
-        return Optional.ofNullable(gameObject);
+    public GameObject getGameObject() {
+        return gameObject;
     }
 
     @Override

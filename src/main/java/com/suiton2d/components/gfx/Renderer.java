@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.suiton2d.components.Component;
 import com.suiton2d.scene.GameObject;
 
-import java.util.Optional;
-
 public abstract class Renderer implements Component {
 
     private String name;
@@ -30,8 +28,8 @@ public abstract class Renderer implements Component {
     }
 
     @Override
-    public Optional<GameObject> getGameObject() {
-        return Optional.ofNullable(gameObject);
+    public GameObject getGameObject() {
+        return gameObject;
     }
 
     @Override

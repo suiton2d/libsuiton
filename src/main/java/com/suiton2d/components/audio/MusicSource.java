@@ -6,8 +6,6 @@ import com.suiton2d.assets.MusicTrack;
 import com.suiton2d.components.Component;
 import com.suiton2d.scene.GameObject;
 
-import java.util.Optional;
-
 /**
  * MusicSource is a {@link Component} used for the playback of
  * music files.
@@ -93,8 +91,8 @@ public class MusicSource implements Component {
     }
 
     @Override
-    public Optional<GameObject> getGameObject() {
-        return Optional.ofNullable(gameObject);
+    public GameObject getGameObject() {
+        return gameObject;
     }
 
     @Override

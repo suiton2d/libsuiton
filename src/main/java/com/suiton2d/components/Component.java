@@ -34,7 +34,7 @@ public interface Component {
 
     String getName();
 
-    Optional<GameObject> getGameObject();
+    GameObject getGameObject();
 
     void setGameObject(GameObject gameObject);
 

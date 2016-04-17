@@ -6,8 +6,6 @@ import com.suiton2d.components.Component;
 import com.suiton2d.components.physics.CollisionListener;
 import com.suiton2d.scene.GameObject;
 
-import java.util.Optional;
-
 /**
  * Behavior is a {@link Component} for executing
  * {@link Script} assets, providing custom functionality to
@@ -50,8 +48,8 @@ public class Behavior implements Component, CollisionListener {
     }
 
     @Override
-    public Optional<GameObject> getGameObject() {
-        return Optional.ofNullable(gameObject);
+    public GameObject getGameObject() {
+        return gameObject;
     }
 
     @Override
@@ -71,13 +69,16 @@ public class Behavior implements Component, CollisionListener {
 
     @Override
     public void start() {
-        getGameObject().ifPresent(getScript()::start);
-
+        if (gameObject != null) {
+            getScript().start(gameObject);
+        }
     }
 
     @Override
     public void update(float dt) {
-        getGameObject().ifPresent(go -> getScript().update(go, dt));
+        if (gameObject != null) {
+            getScript().update(gameObject, dt);
+        }
     }
 
     @Override
