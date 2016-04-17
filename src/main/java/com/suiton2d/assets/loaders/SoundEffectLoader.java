@@ -23,12 +23,12 @@ public class SoundEffectLoader extends AsynchronousAssetLoader<SoundEffect, Soun
 
     @Override
     public void loadAsync(AssetManager manager, String fileName, FileHandle file, SoundEffectParameter parameter) {
-        soundLoader.loadAsync(manager, fileName, file, parameter.soundParameter);
+        soundLoader.loadAsync(manager, fileName, file, parameter != null ? parameter.soundParameter: null);
     }
 
     @Override
     public SoundEffect loadSync(AssetManager manager, String fileName, FileHandle file, SoundEffectParameter parameter) {
-        Sound sound = soundLoader.loadSync(manager, fileName, file, parameter.soundParameter);
+        Sound sound = soundLoader.loadSync(manager, fileName, file, parameter != null ? parameter.soundParameter: null);
         return sound != null ? new SoundEffect(file.path(), sound) : null;
     }
 
@@ -39,6 +39,6 @@ public class SoundEffectLoader extends AsynchronousAssetLoader<SoundEffect, Soun
 
     public static class SoundEffectParameter extends AssetLoaderParameters<SoundEffect> {
 
-        public SoundLoader.SoundParameter soundParameter;
+        public SoundLoader.SoundParameter soundParameter = new SoundLoader.SoundParameter();
     }
 }

@@ -22,12 +22,13 @@ public class TiledTileSheetLoader extends AsynchronousAssetLoader<TiledTileSheet
 
     @Override
     public void loadAsync(AssetManager manager, String fileName, FileHandle file, TiledTileSheetParameter parameter) {
-        tmxMapLoader.loadAsync(manager, fileName, file, parameter.tmxParameters);
+        tmxMapLoader.loadAsync(manager, fileName, file, parameter != null ? parameter.tmxParameters : null);
     }
 
     @Override
     public TiledTileSheet loadSync(AssetManager manager, String fileName, FileHandle file, TiledTileSheetParameter parameter) {
-        TiledMap tiledMap = tmxMapLoader.loadSync(manager, fileName, file, parameter.tmxParameters);
+        TiledMap tiledMap = tmxMapLoader.loadSync(manager, fileName, file, parameter != null
+                ? parameter.tmxParameters : null);
         return tiledMap != null ? new TiledTileSheet(file.path(), tiledMap) : null;
     }
 
@@ -37,6 +38,6 @@ public class TiledTileSheetLoader extends AsynchronousAssetLoader<TiledTileSheet
     }
 
     public static class TiledTileSheetParameter extends AssetLoaderParameters<TiledTileSheet> {
-        public TmxMapLoader.Parameters tmxParameters;
+        public TmxMapLoader.Parameters tmxParameters = new TmxMapLoader.Parameters();
     }
 }

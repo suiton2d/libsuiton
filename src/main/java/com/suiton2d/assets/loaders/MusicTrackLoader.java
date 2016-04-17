@@ -22,12 +22,12 @@ public class MusicTrackLoader extends AsynchronousAssetLoader<MusicTrack, MusicT
 
     @Override
     public void loadAsync(AssetManager manager, String fileName, FileHandle file, MusicTrackParameter parameter) {
-        musicLoader.loadAsync(manager, fileName, file, parameter.musicParameter);
+        musicLoader.loadAsync(manager, fileName, file, parameter != null ? parameter.musicParameter: null);
     }
 
     @Override
     public MusicTrack loadSync(AssetManager manager, String fileName, FileHandle file, MusicTrackParameter parameter) {
-        Music music = musicLoader.loadSync(manager, fileName, file, parameter.musicParameter);
+        Music music = musicLoader.loadSync(manager, fileName, file, parameter != null ? parameter.musicParameter: null);
         return music != null ? new MusicTrack(file.path(), music) : null;
     }
 
@@ -38,6 +38,6 @@ public class MusicTrackLoader extends AsynchronousAssetLoader<MusicTrack, MusicT
     }
 
     public static class MusicTrackParameter extends AssetLoaderParameters<MusicTrack> {
-        public MusicLoader.MusicParameter musicParameter;
+        public MusicLoader.MusicParameter musicParameter = new MusicLoader.MusicParameter();
     }
 }

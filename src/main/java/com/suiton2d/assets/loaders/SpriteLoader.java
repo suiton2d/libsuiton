@@ -22,12 +22,13 @@ public class SpriteLoader extends AsynchronousAssetLoader<Sprite, SpriteLoader.S
 
     @Override
     public void loadAsync(AssetManager manager, String fileName, FileHandle file, SpriteParameter parameter) {
-        textureLoader.loadAsync(manager, fileName, file, parameter.textureParameter);
+        textureLoader.loadAsync(manager, fileName, file, parameter != null ? parameter.textureParameter : null);
     }
 
     @Override
     public Sprite loadSync(AssetManager manager, String fileName, FileHandle file, SpriteParameter parameter) {
-        Texture texture = textureLoader.loadSync(manager, fileName, file, parameter.textureParameter);
+        Texture texture = textureLoader.loadSync(manager, fileName, file, parameter != null
+                ? parameter.textureParameter : null);
         return texture != null ? new Sprite(file.path(), texture) : null;
     }
 
@@ -37,6 +38,6 @@ public class SpriteLoader extends AsynchronousAssetLoader<Sprite, SpriteLoader.S
     }
 
     public static class SpriteParameter extends AssetLoaderParameters<Sprite> {
-        public TextureLoader.TextureParameter textureParameter;
+        public TextureLoader.TextureParameter textureParameter = new TextureLoader.TextureParameter();
     }
 }
