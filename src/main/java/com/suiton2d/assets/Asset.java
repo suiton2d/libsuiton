@@ -20,8 +20,6 @@ package com.suiton2d.assets;
 
 import com.badlogic.gdx.utils.Disposable;
 
-import java.io.File;
-
 /**
  * Asset is an abstract base class for a game resource,
  * such as audio files, image files, script fiels, etc...

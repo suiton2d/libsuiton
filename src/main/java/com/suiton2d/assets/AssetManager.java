@@ -145,14 +145,11 @@ public class AssetManager {
 
     public static void cleanup() {
         for (List<AssetDescriptor> assetList : assetMap.values()) {
-            for (AssetDescriptor asset : assetList) {
-                if (manager.isLoaded(asset.fileName))
-                    manager.unload(asset.fileName);
-            }
-
+            assetList.stream()
+                    .filter(asset -> manager.isLoaded(asset.fileName))
+                    .forEach(asset -> manager.unload(asset.fileName));
             assetList.clear();
         }
-
         assetMap.clear();
     }
 }
