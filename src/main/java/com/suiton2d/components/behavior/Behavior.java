@@ -146,27 +146,31 @@ public class Behavior implements Component, CollisionListener {
 
     @Override
     public void beginCollision(GameObject go1, GameObject go2) {
-        Context context = Context.enter();
-        context.setOptimizationLevel(-1);
-        try {
-            if (beginCollisionFunction != Scriptable.NOT_FOUND) {
-                beginCollisionFunction.call(context, scope, scope, new Object[]{go1, go2});
+        if (enabled) {
+            Context context = Context.enter();
+            context.setOptimizationLevel(-1);
+            try {
+                if (beginCollisionFunction != Scriptable.NOT_FOUND) {
+                    beginCollisionFunction.call(context, scope, scope, new Object[]{go1, go2});
+                }
+            } finally {
+                Context.exit();
             }
-        } finally {
-            Context.exit();
         }
     }
 
     @Override
     public void endCollision(GameObject go1, GameObject go2) {
-        Context context = Context.enter();
-        context.setOptimizationLevel(-1);
-        try {
-            if (endCollisionFunction != Scriptable.NOT_FOUND) {
-                endCollisionFunction.call(context, scope, scope, new Object[]{go1, go2});
+        if (enabled) {
+            Context context = Context.enter();
+            context.setOptimizationLevel(-1);
+            try {
+                if (endCollisionFunction != Scriptable.NOT_FOUND) {
+                    endCollisionFunction.call(context, scope, scope, new Object[]{go1, go2});
+                }
+            } finally {
+                Context.exit();
             }
-        } finally {
-            Context.exit();
         }
     }
 }
