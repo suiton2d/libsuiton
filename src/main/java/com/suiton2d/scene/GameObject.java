@@ -37,6 +37,7 @@ import com.suiton2d.components.physics.RigidBody;
 public class GameObject extends Group implements CollisionListener {
 
     protected Array<Component> components;
+    protected Array<CollisionListener> collisionListeners;
     protected Layer layer;
     protected Renderer renderer;
     protected RigidBody rigidBody;
@@ -44,6 +45,7 @@ public class GameObject extends Group implements CollisionListener {
     public GameObject(String name) {
         setName(name);
         this.components = new Array<>();
+        this.collisionListeners = new Array<>();
     }
 
     public Array<Component> getComponents() {
@@ -105,10 +107,15 @@ public class GameObject extends Group implements CollisionListener {
     public void addComponent(Component component) {
         components.add(component);
         component.setGameObject(this);
-        if (component instanceof AnimatedRenderer)
+        if (component instanceof AnimatedRenderer) {
             renderer = (AnimatedRenderer) component;
-        else if (component instanceof RigidBody)
+        } else if (component instanceof RigidBody) {
             rigidBody = (RigidBody) component;
+        }
+
+        if (component instanceof CollisionListener) {
+            collisionListeners.add((CollisionListener) component);
+        }
     }
 
     /**
@@ -118,8 +125,15 @@ public class GameObject extends Group implements CollisionListener {
     public void removeComponent(Component component) {
         components.removeValue(component, true);
         component.setGameObject(null);
-        if (component == renderer)
+        if (component == renderer) {
             renderer = null;
+        } else if (component == rigidBody) {
+            rigidBody = null;
+        }
+
+        if (component instanceof CollisionListener) {
+            collisionListeners.removeValue((CollisionListener) component, true);
+        }
     }
 
     @Override
@@ -139,7 +153,6 @@ public class GameObject extends Group implements CollisionListener {
 
     @Override
     public void act(float dt) {
-
         for (Component c : components) {
             if (!(c instanceof AnimatedRenderer) && c.isEnabled())
                 c.update(dt);
@@ -157,19 +170,15 @@ public class GameObject extends Group implements CollisionListener {
 
     @Override
     public void beginCollision(GameObject go1, GameObject go2) {
-        for (Component c : components) {
-            if (c.isEnabled() && c instanceof CollisionListener) {
-                ((CollisionListener)c).beginCollision(go1, go2);
-            }
+        for (CollisionListener c : collisionListeners) {
+            c.beginCollision(go1, go2);
         }
     }
 
     @Override
     public void endCollision(GameObject go1, GameObject go2) {
-        for (Component c : components) {
-            if (c.isEnabled() && c instanceof CollisionListener) {
-                ((CollisionListener)c).endCollision(go1, go2);
-            }
+        for (CollisionListener c : collisionListeners) {
+            c.endCollision(go1, go2);
         }
     }
 }
