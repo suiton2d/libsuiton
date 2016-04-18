@@ -1,6 +1,8 @@
 package com.suiton2d.assets;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.suiton2d.components.anim.KeyFrameAnimation;
+import com.suiton2d.components.gfx.SpriteRenderer;
 
 import java.util.Arrays;
 
@@ -15,10 +17,11 @@ public class SpriteSheet {
     private int frameWidth;
     private int frameHeight;
 
-    public SpriteSheet(Sprite sprite, int frameWidth, int frameHeight) {
-        this.sprite = sprite;
+    public SpriteSheet(Sprite sprite, int frameWidth, int frameHeight,
+                       SpriteRenderer<KeyFrameAnimation> spriteRenderer) {
         this.frameWidth = frameWidth;
         this.frameHeight = frameHeight;
+        this.sprite = spriteRenderer.getSprite();
         init();
     }
 
