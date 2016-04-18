@@ -17,7 +17,7 @@ public class SpriteSheet {
     private int frameWidth;
     private int frameHeight;
 
-    public SpriteSheet(Sprite sprite, int frameWidth, int frameHeight,
+    public SpriteSheet(int frameWidth, int frameHeight,
                        SpriteRenderer<KeyFrameAnimation> spriteRenderer) {
         this.frameWidth = frameWidth;
         this.frameHeight = frameHeight;
