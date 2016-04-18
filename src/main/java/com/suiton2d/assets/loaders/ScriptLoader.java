@@ -10,7 +10,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 import com.suiton2d.assets.JavascriptScript;
 import com.suiton2d.assets.Script;
-import com.suiton2d.util.ByteUtils;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.Scriptable;
@@ -24,7 +23,7 @@ public class ScriptLoader extends SynchronousAssetLoader<Script, ScriptLoader.Sc
 
     @Override
     public Script load(AssetManager assetManager, String fileName, FileHandle file, ScriptParameter parameter) {
-        String contents = ByteUtils.decodeBase64String(new String(file.readBytes()));
+        String contents = file.readString("UTF-8");
         if ("js".equalsIgnoreCase(file.extension())) {
             Context context = Context.enter();
             context.setOptimizationLevel(-1);
