@@ -8,6 +8,10 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.SynchronousAssetLoader;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.math.Vector;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Array;
 import com.suiton2d.assets.JavascriptScript;
 import com.suiton2d.assets.Script;
@@ -42,8 +46,19 @@ public class ScriptLoader extends SynchronousAssetLoader<Script, ScriptLoader.Sc
     private JavascriptScript loadJavascript(FileHandle file) throws ScriptException {
         ScriptEngineManager manager = new ScriptEngineManager();
         ScriptEngine engine = manager.getEngineByName("nashorn");
+        initJavascriptObjects(engine);
         engine.eval(file.reader());
         return new JavascriptScript(file.path(), engine);
+    }
+
+    private void initJavascriptObjects(ScriptEngine scriptEngine) throws ScriptException {
+        scriptEngine.put(Actions.class.getSimpleName(), scriptEngine.eval(Actions.class.getName()));
+        scriptEngine.put(MoveByAction.class.getSimpleName(), scriptEngine.eval(MoveByAction.class.getName()));
+        scriptEngine.put(MoveToAction.class.getSimpleName(), scriptEngine.eval(MoveToAction.class.getName()));
+        scriptEngine.put(Vector.class.getSimpleName(), scriptEngine.eval(Vector.class.getName()));
+
+        scriptEngine.put("Input", Gdx.input);
+        scriptEngine.put("Net", Gdx.net);
     }
 
     @Override
