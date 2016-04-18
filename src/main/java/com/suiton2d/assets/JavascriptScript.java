@@ -91,7 +91,7 @@ public class JavascriptScript implements Script<Scriptable> {
         Context context = Context.enter();
         context.setOptimizationLevel(-1);
         try {
-            if (startFunction != Scriptable.NOT_FOUND) {
+            if (startFunction != null) {
                 startFunction.call(context, scope, scope, new Object[]{gameObject});
             }
         } finally {
@@ -104,7 +104,7 @@ public class JavascriptScript implements Script<Scriptable> {
         Context context = Context.enter();
         context.setOptimizationLevel(-1);
         try {
-            if (updateFunction != Scriptable.NOT_FOUND) {
+            if (updateFunction != null) {
                 updateFunction.call(context, scope, scope, new Object[]{gameObject, dt});
             }
         } finally {
@@ -122,7 +122,7 @@ public class JavascriptScript implements Script<Scriptable> {
         Context context = Context.enter();
         context.setOptimizationLevel(-1);
         try {
-            if (finishFunction != Scriptable.NOT_FOUND) {
+            if (finishFunction != null) {
                 finishFunction.call(context, scope, scope, null);
             }
         } finally {
@@ -135,7 +135,7 @@ public class JavascriptScript implements Script<Scriptable> {
         Context context = Context.enter();
         context.setOptimizationLevel(-1);
         try {
-            if (beginCollisionFunction != Scriptable.NOT_FOUND) {
+            if (beginCollisionFunction != null) {
                 beginCollisionFunction.call(context, scope, scope, new Object[]{go1, go2});
             }
         } finally {
@@ -148,7 +148,7 @@ public class JavascriptScript implements Script<Scriptable> {
         Context context = Context.enter();
         context.setOptimizationLevel(-1);
         try {
-            if (endCollisionFunction != Scriptable.NOT_FOUND) {
+            if (endCollisionFunction != null) {
                 endCollisionFunction.call(context, scope, scope, new Object[]{go1, go2});
             }
         } finally {

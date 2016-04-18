@@ -34,13 +34,18 @@ public class ScriptLoader extends SynchronousAssetLoader<Script, ScriptLoader.Sc
                 scope.setPrototype(globalScope);
                 scope.setParentScope(null);
                 context.evaluateString(scope, contents, fileName, 1, null);
-                Function startFunction = (Function) scope.get("start", scope);
-                Function updateFunction = (Function) scope.get("update", scope);
-                Function finishFunction = (Function) scope.get("finish", scope);
-                Function beginCollisionFunction = (Function) scope.get("beginCollision", scope);
-                Function endCollisionFunction = (Function) scope.get("endCollision", scope);
-                return new JavascriptScript(file.path(), scope, startFunction, updateFunction, finishFunction,
-                        beginCollisionFunction, endCollisionFunction);
+                Object startFunction = scope.get("start", scope);
+                Object updateFunction = scope.get("update", scope);
+                Object finishFunction = scope.get("finish", scope);
+                Object beginCollisionFunction = scope.get("beginCollision", scope);
+                Object endCollisionFunction = scope.get("endCollision", scope);
+                return new JavascriptScript(file.path(),
+                        scope,
+                        startFunction != Scriptable.NOT_FOUND ? (Function) startFunction : null,
+                        updateFunction != Scriptable.NOT_FOUND ? (Function) updateFunction : null,
+                        finishFunction != Scriptable.NOT_FOUND ? (Function) finishFunction : null,
+                        beginCollisionFunction != Scriptable.NOT_FOUND ? (Function) beginCollisionFunction : null,
+                        endCollisionFunction != Scriptable.NOT_FOUND ? (Function) endCollisionFunction : null);
             } finally {
                 Context.exit();
             }
