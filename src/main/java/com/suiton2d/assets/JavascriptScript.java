@@ -1,64 +1,33 @@
 package com.suiton2d.assets;
 
+import com.badlogic.gdx.Gdx;
 import com.suiton2d.scene.GameObject;
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.Function;
-import org.mozilla.javascript.Scriptable;
-import org.mozilla.javascript.ScriptableObject;
+
+import javax.script.Invocable;
+import javax.script.ScriptEngine;
+import javax.script.ScriptException;
 
 /**
  * JavascriptScript is a {@link Script} implementation for javascript files.
  */
-public class JavascriptScript implements Script<Scriptable> {
-
-    private static ScriptableObject globalScope;
-
-    static {
-        Context context = Context.enter();
-        context.setOptimizationLevel(-1);
-        try {
-            globalScope = context.initStandardObjects();
-        } finally {
-            Context.exit();
-        }
-    }
-
-
+public class JavascriptScript implements Script<ScriptEngine> {
+    private static final String TAG = JavascriptScript.class.getSimpleName();
     private String path;
     private String filename;
     private boolean loaded;
-    private Scriptable scope;
+    private ScriptEngine scriptEngine;
+    private Invocable invocable;
 
-    private Function startFunction;
-    private Function updateFunction;
-    private Function finishFunction;
-    private Function beginCollisionFunction;
-    private Function endCollisionFunction;
-
-    public JavascriptScript(String path,
-                            Scriptable scope,
-                            Function startFunction,
-                            Function updateFunction,
-                            Function finishFunction,
-                            Function beginCollisionFunction,
-                            Function endCollisionFunction) {
+    public JavascriptScript(String path, ScriptEngine scriptEngine) {
         this.path = path;
         this.filename = path.substring(path.lastIndexOf("/")+1);
-        this.scope = scope;
-        this.startFunction = startFunction;
-        this.updateFunction = updateFunction;
-        this.finishFunction = finishFunction;
-        this.beginCollisionFunction = beginCollisionFunction;
-        this.endCollisionFunction = endCollisionFunction;
-    }
-
-    public static ScriptableObject getGlobalScope() {
-        return globalScope;
+        this.scriptEngine = scriptEngine;
+        this.invocable = (Invocable) scriptEngine;
     }
 
     @Override
-    public Scriptable getData() {
-        return scope;
+    public ScriptEngine getData() {
+        return scriptEngine;
     }
 
     @Override
@@ -83,76 +52,61 @@ public class JavascriptScript implements Script<Scriptable> {
 
     @Override
     public void dispose() {
-        scope = null;
+        scriptEngine = null;
     }
 
     @Override
     public void start(GameObject gameObject) {
-        Context context = Context.enter();
-        context.setOptimizationLevel(-1);
         try {
-            if (startFunction != null) {
-                startFunction.call(context, scope, scope, new Object[]{gameObject});
-            }
-        } finally {
-            Context.exit();
+            invocable.invokeFunction("start", gameObject);
+        } catch (NoSuchMethodException ignored) {
+
+        } catch (ScriptException e) {
+            Gdx.app.log(TAG, "Failed to execute start() function.", e);
         }
     }
 
     @Override
     public void update(GameObject gameObject, float dt) {
-        Context context = Context.enter();
-        context.setOptimizationLevel(-1);
         try {
-            if (updateFunction != null) {
-                updateFunction.call(context, scope, scope, new Object[]{gameObject, dt});
-            }
-        } finally {
-            Context.exit();
+            invocable.invokeFunction("update", gameObject, dt);
+        } catch (NoSuchMethodException ignored) {
+
+        } catch (ScriptException e) {
+            Gdx.app.log(TAG, "Failed to execute update() function.", e);
         }
     }
 
     @Override
     public void finish() {
-        startFunction = null;
-        updateFunction = null;
-        finishFunction = null;
-        beginCollisionFunction = null;
-        endCollisionFunction = null;
-        Context context = Context.enter();
-        context.setOptimizationLevel(-1);
         try {
-            if (finishFunction != null) {
-                finishFunction.call(context, scope, scope, null);
-            }
-        } finally {
-            Context.exit();
+            invocable.invokeFunction("finish");
+        } catch (NoSuchMethodException ignored) {
+
+        } catch (ScriptException e) {
+            Gdx.app.log(TAG, "Failed to execute finish() function.", e);
         }
     }
 
     @Override
     public void beginCollision(GameObject go1, GameObject go2) {
-        Context context = Context.enter();
-        context.setOptimizationLevel(-1);
         try {
-            if (beginCollisionFunction != null) {
-                beginCollisionFunction.call(context, scope, scope, new Object[]{go1, go2});
-            }
-        } finally {
-            Context.exit();
+            invocable.invokeFunction("beginCollision", go1, go2);
+        } catch (NoSuchMethodException ignored) {
+
+        } catch (ScriptException e) {
+            Gdx.app.log(TAG, "Failed to execute beginCollision() function.", e);
         }
     }
 
     @Override
     public void endCollision(GameObject go1, GameObject go2) {
-        Context context = Context.enter();
-        context.setOptimizationLevel(-1);
         try {
-            if (endCollisionFunction != null) {
-                endCollisionFunction.call(context, scope, scope, new Object[]{go1, go2});
-            }
-        } finally {
-            Context.exit();
+            invocable.invokeFunction("endCollision", go1, go2);
+        } catch (NoSuchMethodException ignored) {
+
+        } catch (ScriptException e) {
+            Gdx.app.log(TAG, "Failed to execute endCollision() function.", e);
         }
     }
 }
