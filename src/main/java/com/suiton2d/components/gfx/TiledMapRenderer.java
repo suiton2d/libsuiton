@@ -37,16 +37,6 @@ public class TiledMapRenderer extends Renderer {
     }
 
     @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void update(float dt) {
-
-    }
-
-    @Override
     public void render(Batch batch, float dt) {
         if (getTiledTileSheet() != null) {
             if (renderer == null)

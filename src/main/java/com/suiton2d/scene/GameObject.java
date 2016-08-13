@@ -154,10 +154,8 @@ public class GameObject extends Group implements CollisionListener {
     @Override
     public void act(float dt) {
         for (Component c : components) {
-            if (!(c instanceof AnimatedRenderer) && c.isEnabled())
-                c.update(dt);
+            c.update(dt);
         }
-
         super.act(dt);
     }
 
