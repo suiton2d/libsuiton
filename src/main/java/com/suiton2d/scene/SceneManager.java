@@ -35,8 +35,16 @@ public class SceneManager {
     private SceneData sceneData;
     private AssetManager assetManager;
 
+    public SceneManager(AssetManager assetManager) {
+        this(assetManager, new SceneData());
+    }
+
     public SceneManager(AssetManager assetManager, SceneData sceneData) {
         this.assetManager = assetManager;
+        init(sceneData);
+    }
+
+    public void init(SceneData sceneData) {
         this.sceneData = sceneData;
         setCurrentScene(sceneData.getStartScene());
     }

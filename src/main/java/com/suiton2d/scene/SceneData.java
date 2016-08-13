@@ -8,6 +8,10 @@ import com.badlogic.gdx.utils.ObjectMap;
 public class SceneData extends ObjectMap<String, Scene> {
     private String startScene;
 
+    public SceneData() {
+        this("");
+    }
+
     public SceneData(String startScene) {
         this.startScene = startScene;
     }
